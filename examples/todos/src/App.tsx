@@ -10,23 +10,31 @@ type Todo = {
   completed: boolean
 }
 
-const filterAtom = atom('all')
+// 原生原子
+const filterAtom = atom('all') // 原子的内容
+// 该数组是保存的原子，而不是值。所以，拿到这个数组的元素（原子），该要 get(item)，才能拿到原子的内容
 const todosAtom = atom<PrimitiveAtom<Todo>[]>([])
+
+// 只读派生原子
 const filteredAtom = atom<PrimitiveAtom<Todo>[]>((get) => {
-  const filter = get(filterAtom)
+  const filter = get(filterAtom) // all | completed | incompleted
   const todos = get(todosAtom)
   if (filter === 'all') return todos
   else if (filter === 'completed')
-    return todos.filter((atom) => get(atom).completed)
+    // todos 是一个原子数组，所以这里数组元素是原子，要 get(atom) 才能拿到原子的内容
+    return todos.filter((atom) => get(atom).completed)  //  get 在派生中可以代表订阅关系，在这里是获取原子的内容
   else return todos.filter((atom) => !get(atom).completed)
 })
 
+
 type RemoveFn = (item: PrimitiveAtom<Todo>) => void
-type TodoItemProps = {
+
+interface ITodoItemProps {
   atom: PrimitiveAtom<Todo>
   remove: RemoveFn
 }
-const TodoItem = ({ atom, remove }: TodoItemProps) => {
+
+const TodoItem = ({ atom, remove }: ITodoItemProps) => {
   const [item, setItem] = useAtom(atom)
   const toggleCompleted = () =>
     setItem((props) => ({ ...props, completed: !props.completed }))
@@ -56,6 +64,7 @@ const Filter = () => {
   )
 }
 
+
 type FilteredType = {
   remove: RemoveFn
 }
@@ -74,12 +83,13 @@ const Filtered = (props: FilteredType) => {
   ))
 }
 
+
 const TodoList = () => {
-  // Use `useSetAtom` to avoid re-render
-  // const [, setTodos] = useAtom(todosAtom)
   const setTodos = useSetAtom(todosAtom)
+
   const remove: RemoveFn = (todo) =>
     setTodos((prev) => prev.filter((item) => item !== todo))
+
   const add = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const title = e.currentTarget.inputTitle.value

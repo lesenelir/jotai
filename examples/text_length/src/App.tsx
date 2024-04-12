@@ -1,5 +1,7 @@
 import { Provider, atom, useAtom } from 'jotai'
 
+// 派生原子的最简单的几个用例
+// 派生只读原子
 const textAtom = atom('hello')
 const textLenAtom = atom((get) => get(textAtom).length)
 const uppercaseAtom = atom((get) => get(textAtom).toUpperCase())

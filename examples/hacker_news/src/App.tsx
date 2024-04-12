@@ -17,7 +17,11 @@ type PostData = {
   url?: string
 }
 
+// 原生原子
 const postId = atom(9001)
+
+// 派生可读原子，read function 可以是 async 的。
+// 但这种没办法缓存上一次请求的数据，每次做切换的时候都会重新请求。
 const postData = atom(async (get) => {
   const id = get(postId)
   const response = await fetch(
@@ -62,6 +66,7 @@ export default function App() {
     <Provider>
       <Id />
       <div>
+        {/* suspense 边界 */}
         <Suspense fallback={<h2>Loading...</h2>}>
           <PostTitle />
         </Suspense>

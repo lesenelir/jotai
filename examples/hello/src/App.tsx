@@ -4,7 +4,10 @@ import PrismCode from 'react-prism'
 import 'prismjs'
 import 'prismjs/components/prism-jsx.min'
 
+// 原生原子
 const textAtom = atom<string>('hello')
+
+// 可读派生原子
 const uppercaseAtom = atom((get) => get(textAtom).toUpperCase())
 
 const Input = () => {

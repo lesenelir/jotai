@@ -1,3 +1,16 @@
+// 项目构成
+
+- 新起一个 atoms 文件夹，文件夹的 atom 对应 pages
+- 原生 atom 后缀需要由 PrimAtom 组成，例如：`countAtom` -> `countPrimAtom`
+- 派生 atom 则用 Atom 后缀，例如：`doubledCountAtom`，这样区分派生和原生 atom
+- 原子取值、取函数，能用 useAtomValue 和 useSetAtom 就用，都要用到的话，就用 useAtom
+
+
+
+
+
+
+
 <br>
 
 ![Jotai (light mode)](./img/jotai-header-light.png#gh-light-mode-only)

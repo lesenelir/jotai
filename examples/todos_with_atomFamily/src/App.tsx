@@ -6,10 +6,13 @@ import { Provider, atom, useAtom, useSetAtom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
 import { nanoid } from 'nanoid'
 
-type Param = { id: string; title?: string }
+type Param = {
+  id: string
+  title?: string
+}
+
 const todoAtomFamily = atomFamily(
-  (param: Param) =>
-    atom({ title: param.title || 'No title', completed: false }),
+  (param: Param) => atom({ title: param.title || 'No title', completed: false }),
   (a: Param, b: Param) => a.id === b.id,
 )
 
