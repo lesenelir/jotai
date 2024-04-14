@@ -25,7 +25,11 @@ export function useSetAtom<Value, Args extends unknown[], Result>(
   atom: WritableAtom<Value, Args, Result>,
   options?: Options,
 ) {
+  // 获取 store
   const store = useStore(options)
+
+  // 返回一个函数，用于设置 atom 的值
+  // useCallback 保持返回的 setAtom 函数不变
   const setAtom = useCallback(
     (...args: Args) => {
       if (import.meta.env?.MODE !== 'production' && !('write' in atom)) {

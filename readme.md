@@ -6,10 +6,11 @@
 - 原子取值、取函数，能用 useAtomValue 和 useSetAtom 就用，都要用到的话，就用 useAtom
 
 
-atom 原子是一个对象，对象有value 值，这个是
+atom 原子是一个对象，对象有value 值，这个是原子对应的状态值
 
+Provider 组件通过 context 为组件的子树提供状态
 
-
+没有 store，采用默认的 store， store 主要用于数据的存储、依赖收集和更新、通知订阅者更新
 
 <br>
 

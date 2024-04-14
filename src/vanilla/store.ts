@@ -74,6 +74,7 @@ type NextDependencies = Map<AnyAtom, AtomState | undefined>
  * Immutable atom state,
  * tracked for both mounted and unmounted atoms in a store.
  */
+// d：当前 atom 依赖了哪些其他atom， 需要用 get 函数获取其他 atom 的值
 type AtomState<Value = AnyValue> = {
   d: Dependencies
 } & ({ e: AnyError } | { v: Value })
@@ -117,6 +118,8 @@ type Dependents = Set<AnyAtom>
  */
 type Mounted = {
   /** The list of subscriber functions. */
+  // 订阅者，有哪些 atom 依赖于 当前的 atom
+  // 当前 atom 状态发生改变，需要通知这些订阅者
   l: Listeners
   /** Atoms that depend on *this* atom. Used to fan out invalidation. */
   t: Dependents
@@ -173,6 +176,7 @@ export type INTERNAL_PrdStore = PrdStore
  * @returns A store.
  */
 export const createStore = (): Store => {
+  // atom 和 状态映射
   const atomStateMap = new WeakMap<AnyAtom, AtomState>()
   const mountedMap = new WeakMap<AnyAtom, Mounted>()
   const pendingStack: Set<AnyAtom>[] = []

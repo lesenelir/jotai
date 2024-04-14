@@ -10,6 +10,7 @@ type Store = ReturnType<typeof useStore>
 const isPromiseLike = (x: unknown): x is PromiseLike<unknown> =>
   typeof (x as any)?.then === 'function'
 
+// 是否包含了 use hooks （实验版本）
 const use =
   ReactExports.use ||
   (<T>(
@@ -56,6 +57,7 @@ export function useAtomValue<AtomType extends Atom<unknown>>(
 ): Awaited<ExtractAtomValue<AtomType>>
 
 export function useAtomValue<Value>(atom: Atom<Value>, options?: Options) {
+  // 获取 store
   const store = useStore(options)
 
   const [[valueFromReducer, storeFromReducer, atomFromReducer], rerender] =
@@ -70,6 +72,7 @@ export function useAtomValue<Value>(atom: Atom<Value>, options?: Options) {
           prev[1] === store &&
           prev[2] === atom
         ) {
+          // 状态值没有变化，直接返回，不re-render
           return prev
         }
         return [nextValue, store, atom]
@@ -85,6 +88,7 @@ export function useAtomValue<Value>(atom: Atom<Value>, options?: Options) {
   }
 
   const delay = options?.delay
+
   useEffect(() => {
     const unsub = store.sub(atom, () => {
       if (typeof delay === 'number') {
@@ -94,6 +98,8 @@ export function useAtomValue<Value>(atom: Atom<Value>, options?: Options) {
       }
       rerender()
     })
+
+    // 触发 rerender
     rerender()
     return unsub
   }, [store, atom, delay])
