@@ -1,7 +1,12 @@
+/**
+ *  Provider Component
+ *
+ */
 import { createContext, createElement, useContext, useRef } from 'react'
 import type { FunctionComponentElement, ReactNode } from 'react'
 import { createStore, getDefaultStore } from '../vanilla.ts'
 
+// 获取 createStore 函数的返回值类型
 type Store = ReturnType<typeof createStore>
 
 type StoreContextType = ReturnType<typeof createContext<Store | undefined>>
@@ -18,6 +23,7 @@ export const useStore = (options?: Options): Store => {
   return options?.store || store || getDefaultStore()
 }
 
+// Provider 是一个组件
 export const Provider = ({
   children,
   store,

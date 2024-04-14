@@ -44,6 +44,7 @@ export function useAtom<AtomType extends Atom<unknown>>(
   options?: Options,
 ): [Awaited<ExtractAtomValue<AtomType>>, never]
 
+// 实现
 export function useAtom<Value, Args extends unknown[], Result>(
   atom: Atom<Value> | WritableAtom<Value, Args, Result>,
   options?: Options,

@@ -6,7 +6,7 @@
 - 原子取值、取函数，能用 useAtomValue 和 useSetAtom 就用，都要用到的话，就用 useAtom
 
 
-
+atom 原子是一个对象，对象有value 值，这个是
 
 
 

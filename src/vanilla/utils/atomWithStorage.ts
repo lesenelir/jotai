@@ -2,9 +2,12 @@ import { atom } from '../../vanilla.ts'
 import type { WritableAtom } from '../../vanilla.ts'
 import { RESET } from './constants.ts'
 
-const isPromiseLike = (x: unknown): x is PromiseLike<unknown> =>
+// 定义了一个 isPromiseLike 函数，用来判断一个值是否是 PromiseLike 类型
+const isPromiseLike = (x: unknown): x is PromiseLike<unknown> => // 函数的返回值就是一个 PromiseLike 类型
+  // 通过 is 关键字，使用函数后， x 就是一个 promise
   typeof (x as any)?.then === 'function'
 
+// 没有订阅类型，返回一个空函数
 type Unsubscribe = () => void
 
 type SetStateActionWithReset<Value> =
@@ -12,6 +15,7 @@ type SetStateActionWithReset<Value> =
   | typeof RESET
   | ((prev: Value) => Value | typeof RESET)
 
+// 对外暴露的接口，AsyncStorage 和 SyncStorage 都是一个对象，包含了 getItem、setItem、removeItem 方法
 export interface AsyncStorage<Value> {
   getItem: (key: string, initialValue: Value) => PromiseLike<Value>
   setItem: (key: string, newValue: Value) => PromiseLike<void>
@@ -46,6 +50,8 @@ export interface SyncStringStorage {
   removeItem: (key: string) => void
 }
 
+// ---------------------------------------------------------------
+
 export function withStorageValidator<Value>(
   validator: (value: unknown) => value is Value,
 ): {
@@ -76,6 +82,8 @@ export function withStorageValidator<Value>(
     return storage
   }
 }
+
+// ---------------------------------------------------------------
 
 type JsonStorageOptions = {
   reviver?: (key: string, value: unknown) => unknown
@@ -171,6 +179,8 @@ export function createJSONStorage<Value>(
 }
 
 const defaultStorage = createJSONStorage()
+
+// ---------------------------------------------------------------
 
 export function atomWithStorage<Value>(
   key: string,
