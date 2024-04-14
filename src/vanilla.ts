@@ -1,6 +1,6 @@
 // 导出 原生的 atom 和 相关的类型
 export { atom } from './vanilla/atom.ts'
-export type { Atom, WritableAtom, PrimitiveAtom } from './vanilla/atom.ts'
+export type { Atom, WritableAtom, PrimitiveAtom } from './vanilla/atom.ts' // 导出相关类型
 
 // export { createStore, getDefaultStore } from './vanilla/store.ts'
 import * as store from './vanilla/store.ts'
@@ -26,4 +26,4 @@ export type {
   ExtractAtomArgs,
   ExtractAtomResult,
   SetStateAction,
-} from './vanilla/typeUtils.ts'
+} from './vanilla/typeUtils.ts' // 导出 原生的 utils 的类型
